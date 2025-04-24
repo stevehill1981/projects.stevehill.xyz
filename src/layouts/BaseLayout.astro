@@ -1,0 +1,58 @@
+---
+// src/layouts/BaseLayout.astro
+import { ViewTransitions } from 'astro:transitions';
+
+interface Props {
+	pageTitle: string;
+}
+
+const { pageTitle } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="A portfolio showcasing Steve Hill's projects" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{pageTitle} | Steve Hill Projects</title>
+		<ViewTransitions /> {/* Enables page transitions */}
+	</head>
+	<body>
+		<main>
+			<slot /> {/* Page content will be injected here */}
+		</main>
+		<style is:global>
+			/* Basic global styles */
+			html {
+				font-family: system-ui, sans-serif;
+				background-color: #f4f4f4; /* Light grey background */
+			}
+			body {
+				margin: 0;
+				padding: 1rem;
+				display: flex;
+				justify-content: center; /* Center content horizontally */
+			}
+			main {
+				max-width: 800px; /* Limit content width */
+				width: 100%;
+				background-color: #fff; /* White background for content */
+				padding: 2rem;
+				border-radius: 8px;
+				box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow */
+			}
+			h1, h2 {
+				color: #333;
+			}
+			a {
+				color: #007bff;
+				text-decoration: none;
+			}
+			a:hover {
+				text-decoration: underline;
+			}
+		</style>
+	</body>
+</html> 

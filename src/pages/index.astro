@@ -1,11 +1,63 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro'; // Assuming you have a base layout, adjust if needed
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const projects = await getCollection('projects');
+const pageTitle = "My Projects";
 ---
+<BaseLayout pageTitle={pageTitle}>
+	<h1>{pageTitle}</h1>
+	<p>Here are some of the projects I've worked on:</p>
+	<ul>
+		{projects.map(project => (
+			<li>
+				<h2>{project.data.title}</h2>
+				<p>{project.data.description}</p>
+				<div class="technologies">
+					<strong>Technologies:</strong>
+					{project.data.technologies.map(tech => (
+						<span class="tech-tag">{tech}</span>
+					))}
+				</div>
+				<a href={project.data.githubUrl} target="_blank" rel="noopener noreferrer">View on GitHub</a>
+				{/* You could add a link to a detailed project page later:
+				<a href={`/${project.slug}/`}>Read more</a> */}
+			</li>
+		))}
+	</ul>
+</BaseLayout>
 
-<Layout>
-	<Welcome />
-</Layout>
+<style>
+	ul {
+		list-style: none;
+		padding: 0;
+	}
+	li {
+		border: 1px solid #ccc;
+		padding: 1rem;
+		margin-bottom: 1rem;
+		border-radius: 4px;
+	}
+	h2 {
+		margin-top: 0;
+		margin-bottom: 0.5rem;
+	}
+	a {
+		display: inline-block;
+		margin-top: 0.5rem;
+	}
+	.technologies {
+		margin-top: 0.75rem;
+		margin-bottom: 0.75rem; /* Add some space before the GitHub link */
+	}
+	.tech-tag {
+		display: inline-block;
+		background-color: #eee;
+		color: #333;
+		padding: 0.2rem 0.5rem;
+		border-radius: 4px;
+		font-size: 0.85em;
+		margin-right: 0.5rem;
+		margin-bottom: 0.3rem; /* Allow wrapping */
+	}
+</style>
