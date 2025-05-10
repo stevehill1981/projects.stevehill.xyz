@@ -5,9 +5,9 @@ const { active = "" } = Astro.props;
   <a href="/" class="site-title" aria-label="Home">Steve Hill</a>
   <a href="https://stevehill.xyz/about" class={active === 'about' ? 'active' : ''}>About</a>
   <span class="dot">&middot;</span>
-  <a href="/" target="_blank" rel="noopener" class={active === 'blog' ? 'active' : ''}>Blog</a>
+  <a href="https://blog.stevehill.xyz/" rel="noopener" class={active === 'blog' ? 'active' : ''}>Blog</a>
   <span class="dot">&middot;</span>
-  <a href="https://projects.stevehill.xyz" target="_blank" rel="noopener" class={active === 'projects' ? 'active' : ''}>Projects</a>
+  <a href="/" rel="noopener" class={active === 'projects' ? 'active' : ''}>Projects</a>
   <span class="dot">&middot;</span>
   <a href="https://code198x.stevehill.xyz" target="_blank" rel="noopener" class={active === 'code198x' ? 'active' : ''}>Code Like It's 198x</a>
   <span class="dot">&middot;</span>
