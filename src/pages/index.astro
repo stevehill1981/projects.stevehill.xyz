@@ -1,63 +1,117 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro'; // Assuming you have a base layout, adjust if needed
-
+import SiteHeader from '../components/SiteHeader.astro';
 const projects = await getCollection('projects');
-const pageTitle = "My Projects";
 ---
-<BaseLayout pageTitle={pageTitle}>
-	<h1>{pageTitle}</h1>
-	<p>Here are some of the projects I've worked on:</p>
-	<ul>
-		{projects.map(project => (
-			<li>
-				<h2>{project.data.title}</h2>
-				<p>{project.data.description}</p>
-				<div class="technologies">
-					<strong>Technologies:</strong>
-					{project.data.technologies.map(tech => (
-						<span class="tech-tag">{tech}</span>
-					))}
-				</div>
-				<a href={project.data.githubUrl} target="_blank" rel="noopener noreferrer">View on GitHub</a>
-				{/* You could add a link to a detailed project page later:
-				<a href={`/${project.slug}/`}>Read more</a> */}
-			</li>
-		))}
-	</ul>
-</BaseLayout>
 
-<style>
-	ul {
-		list-style: none;
-		padding: 0;
-	}
-	li {
-		border: 1px solid #ccc;
-		padding: 1rem;
-		margin-bottom: 1rem;
-		border-radius: 4px;
-	}
-	h2 {
-		margin-top: 0;
-		margin-bottom: 0.5rem;
-	}
-	a {
-		display: inline-block;
-		margin-top: 0.5rem;
-	}
-	.technologies {
-		margin-top: 0.75rem;
-		margin-bottom: 0.75rem; /* Add some space before the GitHub link */
-	}
-	.tech-tag {
-		display: inline-block;
-		background-color: #eee;
-		color: #333;
-		padding: 0.2rem 0.5rem;
-		border-radius: 4px;
-		font-size: 0.85em;
-		margin-right: 0.5rem;
-		margin-bottom: 0.3rem; /* Allow wrapping */
-	}
-</style>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Lato:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet" />
+    <title>Steve Hill – Projects</title>
+    <style>
+      body {
+        font-family: 'Lato', system-ui, sans-serif;
+        background: linear-gradient(135deg, #e0e7ef 0%, #c9d6ff 50%, #e2e2e2 100%);
+        color: #222;
+        margin: 0;
+        min-height: 100vh;
+      }
+      h1 {
+        margin-top: 0;
+        font-size: 2.7rem;
+        font-family: 'Montserrat', system-ui, sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        text-align: center;
+      }
+      .project-list {
+        list-style: none;
+        padding: 0;
+        margin: 3rem auto 0 auto;
+        max-width: 700px;
+        display: block;
+        width: 100%;
+      }
+      .project-item {
+        margin-bottom: 2.2rem;
+        padding-bottom: 2.2rem;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .project-title {
+        font-size: 1.45rem;
+        font-family: 'Montserrat', system-ui, sans-serif;
+        font-weight: 700;
+        margin: 0 0 0.3rem 0;
+        color: #1a237e;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .project-title:hover {
+        color: #3949ab;
+      }
+      .project-description {
+        font-size: 1.08rem;
+        color: #444;
+        margin: 0.2rem 0 0 0;
+      }
+      .project-technologies {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 0.7rem 0 0 0;
+        padding: 0;
+        list-style: none;
+      }
+      .project-technology {
+        background: #e3e8f0;
+        color: #1a237e;
+        font-size: 0.92rem;
+        padding: 0.18em 0.85em;
+        border-radius: 999px;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        display: inline-block;
+      }
+      .project-links {
+        margin-top: 0.5rem;
+      }
+      .project-link {
+        color: #3949ab;
+        text-decoration: underline;
+        margin-right: 1rem;
+        font-size: 1rem;
+      }
+      @media (max-width: 800px) {
+        .project-list {
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <SiteHeader active="projects" />
+    <ul class="project-list">
+      {projects.map(project => (
+        <li class="project-item">
+          <div class="project-title">{project.data.title}</div>
+          <div class="project-description">{project.data.description}</div>
+          <div class="project-links">
+            <a class="project-link" href={project.data.githubUrl} target="_blank" rel="noopener">GitHub</a>
+          </div>
+          {project.data.technologies && project.data.technologies.length > 0 && (
+            <ul class="project-technologies">
+              {project.data.technologies.map(tech => (
+                <li class="project-technology">{tech}</li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))}
+    </ul>
+  </body>
+</html>
